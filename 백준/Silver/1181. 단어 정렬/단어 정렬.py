@@ -1,8 +1,10 @@
-n = int(input())
+import sys
+
+n = int(sys.stdin.readline())
 
 Lst =[]                 # 입력값을 리스트로 만들기 위해 빈 리스트 준비
 for i in range(n):      
-    Lst.append(input()) # 입력값을 리스트로 만들어 준다
+    Lst.append(sys.stdin.readline().strip()) # 입력값을 리스트로 만들어 준다
 
 setLst = set(Lst)       # 중복값을 제거 하기 위해 set로 만들어준다
 Lst = list(setLst)      # set를 다시 리스트로 만들어 준다
