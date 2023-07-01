@@ -1,6 +1,9 @@
+import sys
+input = sys.stdin.readline
+
 
 while True:
-    a = input()
+    a = input().rstrip()
     Stack = []      #괄호를 추가할 스택 리스트
 
     if a == ".":
