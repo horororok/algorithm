@@ -1,4 +1,5 @@
-
+import sys
+input = sys.stdin.readline
 
 n = int(input())
 
@@ -7,7 +8,7 @@ temp = True                 #가능 여부 판별을 위한 boolean
 stack = []
 op = []                     #+, - 출력용 리스트
 for i in range(n):          
-    num = int(input())
+    num = int(input().rstrip())
 
     while cnt <= num:       #num 보다 작거나 같은 숫자들은 스택에 넣는다
         stack.append(cnt)
