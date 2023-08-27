@@ -1,36 +1,43 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] agrs) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // 참외의 개수 입력 받기
-        int K = sc.nextInt();
+        int N = sc.nextInt(); // 참외 개수
+        int[] input = new int[6];
+        int maxR = 0, maxC = 0; // 최대 세로길이, 최대 가로길이
+        int indexR = 0, indexC = 0;
 
-        // 첫 번째 변은 사용하지 않으므로 스킵
-        sc.nextInt();
-
-        // 첫 번째 변의 길이 입력 받기
-        int first = sc.nextInt();
-        int pre = first; // 이전 변의 길이를 저장할 변수 초기화
-
-        int sum = 0; // 참외의 총 개수를 저장할 변수 초기화
-        int max = Integer.MIN_VALUE; // 최대 참외 개수를 저장할 변수 초기화
-
-        // 나머지 5개의 변에 대한 정보 입력 받기
-        for (int i = 1; i < 6; i++) {
-            sc.nextInt(); // 변의 방향은 사용하지 않으므로 스킵
-            int cur = sc.nextInt(); // 현재 변의 길이 입력 받기
-            max = Math.max(cur * pre, max); // 최대 참외 개수 갱신
-            sum += cur * pre; // 참외의 총 개수 누적
-            pre = cur; // 이전 변의 길이 갱신
+        // 6개의 변에 대한 정보 입력 및 처리
+        for (int i = 0; i < 6; i++) {
+            int dir = sc.nextInt();
+            int distance = sc.nextInt();
+            if (dir == 3 || dir == 4) { // 남북 방향일 때
+                maxR = maxR < distance ? distance : maxR; // 최대 세로길이 갱신
+                if (maxR == distance) indexR = i; // 최대 세로길이의 변 인덱스 저장
+            } else { // 동서 방향일 때
+                maxC = maxC < distance ? distance : maxC; // 최대 가로길이 갱신
+                if (maxC == distance) indexC = i; // 최대 가로길이의 변 인덱스 저장
+            }
+            input[i] = distance; // 입력된 거리를 배열에 저장
         }
 
-        // 마지막 변과 첫 번째 변의 정보를 사용하여 최대 참외 개수 갱신
-        max = Math.max(pre * first, max);
-        sum += pre * first; // 마지막 변과 첫 번째 변의 참외 개수 누적
+        int nextR1 = input[5], nextC1 = input[5]; // nextR1, R2 => 세로길이 후보
+        int nextR2 = input[0], nextC2 = input[0]; // nextC1, C2 => 가로길이 후보
 
-        // 실제 참외의 개수를 계산하고 출력
-        System.out.println((sum - max * 2) * K);
+        // 인덱스 범위 체크 후 세로길이 후보 갱신
+        if (indexC - 1 > -1) nextR1 = input[indexC - 1];
+        if (indexC + 1 < 6) nextR2 = input[indexC + 1];
+
+        // 인덱스 범위 체크 후 가로길이 후보 갱신
+        if (indexR - 1 > -1) nextC1 = input[indexR - 1];
+        if (indexR + 1 < 6) nextC2 = input[indexR + 1];
+
+        // 최대 가로길이 * 세로길이후보 중 작은 길이 + 가로길이후보 중 작은 길이 * (최대 세로길이 - 세로길이후보 중 작은 길이)
+        int area = maxC * Math.min(nextR1, nextR2) + Math.min(nextC1, nextC2) * (maxR - (Math.min(nextR1, nextR2)));
+
+        System.out.println(area * N);
+
     }
 }
