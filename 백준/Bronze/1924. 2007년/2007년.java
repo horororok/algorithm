@@ -1,0 +1,17 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int m = scanner.nextInt();
+        int d = scanner.nextInt();
+        String[] days = {"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
+        int[] months = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int n = 0;
+        for (int i = 0; i < m; i++) {
+            n += months[i];
+        }
+        n += d - 1;
+        System.out.print(days[n % 7]);
+    }
+}
