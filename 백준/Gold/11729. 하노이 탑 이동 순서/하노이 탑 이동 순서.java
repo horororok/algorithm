@@ -18,10 +18,9 @@ public class Main {
 
 		// 하노이 탑 이동 순서 계산 함수 호출
 		rec(N, 1, 2, 3);
-		System.out.println(sb+ " "+ "\n");
+		System.out.println(sb);
 	}
-//하노이 탑 공식을 구해주고 구해준 공식을 토대로 재귀식을 뽑아낼 수 있다.
-    
+
 	public static void rec(int N, int start, int mid, int to) {
 		if (N == 1) {
 			// 원판을 한 번 이동하고 결과를 StringBuilder에 저장
