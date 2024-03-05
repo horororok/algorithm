@@ -1,37 +1,36 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
 
-public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		Set<String> set = new HashSet<>();
+public class Main  {
+    public static void main(String[] args) throws Exception {
+      
+      //새로운 사람이 입장한 이후 첫 채팅을 입력하는 사람은 반드시 곰곰티콘으로 인사를 한다.
+      //ENTER은 새로운 사람이 채팅방에 입장했음을 나타낸다.
+      //그 외의 경우는 채팅을 입력한 유저의 닉네임
+      //곰곰티콘이 사용된 횟수 구하기
+      //첫번째 주어지는 문자열은 무조건 ENTER이다.
 
-		// enter 이후에 또다시 엔터가 나올때까지 닉네임을 셋에 넣는다
-		/// 엔터가 또나올 경우 셋의 크기를 저장하고 셋을 초기화 한다
-		// 다시 반복하면서 저장한 셋의 크기에 끝날때까지 계속 셋의 크기를 더해준다.
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
 
-		int N = sc.nextInt();
+      int N = Integer.parseInt(br.readLine()); //정수형으로 변환하여 N에 저장
+      
+      int gomgom = 0; //gomgom을 0으로 초기화
 
-		int cnt = 0;
-		int ans = 0;
-		for (int i = 0; i < N; i++) {
-			String a = sc.next();
+      HashSet<String> set = new HashSet<>(); //set을 HashSet으로 선언
 
-			if (a.equals("ENTER")) {
-				ans += cnt;
-				cnt = 0;
-				set.clear();
-				continue;
-			} else {
-				set.add(a);
-				cnt = set.size();
-			}
+      while(N-- > 0) { //N이 0보다 크면 반복
+        String str = br.readLine(); //문자열을 입력받아 str에 저장
+        if(str.equals("ENTER")) { //str이 "ENTER"이면
+        set = new HashSet<>(); //set을 HashSet으로 초기화
+        continue; //다음 반복으로 넘어감
+        }
+        if(!set.contains(str)) { //set에 str이 포함되어 있지 않으면
+          gomgom++; //gomgom을 1 증가
+          set.add(str); //set에 str을 추가
+        }
 
-		}
-		ans += cnt;
-		
-		System.out.println(ans);
-
-	}
+      }
+      System.out.println(gomgom); //gomgom 출력
+    }
 }
