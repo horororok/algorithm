@@ -1,51 +1,21 @@
-const fs = require("fs");
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
-const input = fs.readFileSync("/dev/stdin").toString().trim();
-const N = parseInt(input);
-
-if (N === 0) {
-  console.log('*');
-} else if (N === 1) {
-  console.log('**\n*');
-} else {
-  const size = Math.pow(2, N);
-  const board = [];
-
-  const init = (N) => {
-    let en = N;
-    for (let i = 0; i < N; i++) {
-      board[i] = [];
-      for (let j = 0; j < en; j++) {
-        board[i][j] = '*';
-      }
-      en--;
+function solution() {
+    
+    function star(n) {
+        if (n <= 0) return ['*'];
+        const prev = star(n-1);
+        const m = 2**(n-1);
+        let r = Array(m*2).fill('');
+        for (let i=0; i<m*2; i++) r[i] += prev[i%m];
+        for (let i=0; i<m; i++) r[i] += prev[i%m];
+        for (let i=m; i<m*2; i++) r[i] += ' '.repeat(m);
+        return r;
     }
-  };
-
-  const star = (y, x, size) => {
-    let st = x + size / 2 - 1;
-    for (let i = y + 1; i < y + size / 2; i++) {
-      for (let j = st; j < x + size / 2; j++) {
-        board[i][j] = ' ';
-      }
-      st--;
-    }
-    if (size === 4) return;
-    star(y, x, size / 2);
-    star(y, x + size / 2, size / 2);
-    star(y + size / 2, x, size / 2);
-    return;
-  };
-
-  init(size);
-  star(0, 0, size);
-  let en = size;
-  for (let i = 0; i < size; i++) {
-    let row = '';
-    for (let j = 0; j < en; j++) {
-      row += board[i][j];
-    }
-    console.log(row);
-    en--;
-  }
+    
+    const N = Number(input[0]);
+    for (let s of star(N)) console.log(s.trimEnd());
 }
+
+solution();
